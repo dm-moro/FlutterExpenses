@@ -9,7 +9,7 @@ class Chart extends StatelessWidget {
 
   Chart(this.recentTransaction);
 
-  List<Map<String, Object>> get groupedTransactions {
+  List<Map<String, dynamic>> get groupedTransactions {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
 
@@ -28,7 +28,7 @@ class Chart extends StatelessWidget {
       print(DateFormat.E().format(weekDay)[0]);
       print(totalSum);
 
-      return {'day': DateFormat.E().format(weekDay)[0], 'value': 9.99};
+      return {'day': DateFormat.E().format(weekDay)[0], 'value': totalSum};
     });
   }
 
@@ -39,12 +39,14 @@ class Chart extends StatelessWidget {
       elevation: 6,
       margin: EdgeInsets.all(20),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children:
             groupedTransactions.map((tr) {
               return ChartBar(
                 label: tr['day'],
                 value: tr['value'],
-                percentage: 0,
+                percentage: 0.4,
               );
             }).toList(),
       ),
