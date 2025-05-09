@@ -64,6 +64,30 @@ class _MyHomePageState extends State<MyHomePage> {
       value: 110.09,
       date: DateTime.now().subtract(Duration(days: 2)),
     ),
+    Transaction(
+      id: 't3',
+      title: 'Maquiagem',
+      value: 317.39,
+      date: DateTime.now().subtract(Duration(days: 2)),
+    ),
+    Transaction(
+      id: 't4',
+      title: 'Açai',
+      value: 17.85,
+      date: DateTime.now().subtract(Duration(days: 2)),
+    ),
+     Transaction(
+      id: 't5',
+      title: 'Roupa',
+      value: 245.969,
+      date: DateTime.now().subtract(Duration(days: 2)),
+    ),
+    Transaction(
+      id: 't6',
+      title: 'Cosmetico',
+      value: 123.65,
+      date: DateTime.now().subtract(Duration(days: 2)),
+    ),
   ];
 
   List<Transaction> get _recentTransactions {
@@ -72,12 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
@@ -85,6 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     Navigator.of(context).pop();
+  }
+
+  _removeTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) => tr.id == id);
+    });
   }
 
   _openTransactionFormModal(BuildContext context) {
@@ -113,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _removeTransaction),
           ],
         ),
       ),
