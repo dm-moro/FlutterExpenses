@@ -1,5 +1,7 @@
+import 'package:expenses/components/adaptativa_textfield.dart';
+import 'package:expenses/components/adaptative_button.dart';
+import 'package:expenses/components/adaptative_datepicker.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
 
@@ -29,23 +31,6 @@ class _TransactionFormState extends State<TransactionForm> {
     widget.onSubmit(title, value, _selectedDate);
   }
 
-  _showDatePicker() {
-    showDatePicker(
-      context: context, 
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2024), 
-      lastDate: DateTime.now(),
-    ).then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
-
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -54,56 +39,31 @@ class _TransactionFormState extends State<TransactionForm> {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  TextField(
-                    controller: titleController,
-                    onSubmitted: (_) => _submitForm(),
-                    decoration: InputDecoration(
-                      labelText: 'Título'
-                    ),
+                  AdaptativeTextField(
+                    label: 'Título', 
+                    controller: titleController, 
+                    onSubmitted: (_) => _submitForm(), 
+                    keyboardType: TextInputType.text
                   ),
-                  TextField(
-                    controller: valueController,
+                  AdaptativeTextField(
+                    label: 'Valor R\$', 
+                    controller: valueController, 
+                    onSubmitted: (_) => _submitForm(),
                     keyboardType: TextInputType.numberWithOptions(decimal: true),
-                    onSubmitted: (_) => _submitForm(),
-                    decoration: InputDecoration(
-                      labelText: 'Valor R\$'
-                    ),
                   ),
-                  Container(
-                    height: 70,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            _selectedDate == null 
-                            ? 'Nenhuma data selecionada!'
-                            : 'Data selecionada: ${DateFormat('dd/MM/y').format(_selectedDate!)}'
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: _showDatePicker, 
-                          child: Text('Selecionar Data'),
-                          style: ButtonStyle(), 
-                        ),
-                      ],
-                    ),
+                  SizedBox(height: 20),
+                  AdaptativeDatePicker(
+                    selectedDate: _selectedDate,
+                    onDateChanged: (newDate) {
+                      setState(() {
+                        _selectedDate = newDate;
+                      });
+                    },
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextButton(
-                        onPressed:_submitForm,
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).primaryColor),
-                        ),
-                        child: Text(
-                          'Nova transação',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                      AdaptativeButton(label: 'Nova Transação', onPressed: _submitForm),
                     ],
                   ),
                 ],
