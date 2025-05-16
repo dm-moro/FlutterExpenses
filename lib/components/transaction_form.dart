@@ -51,7 +51,7 @@ class _TransactionFormState extends State<TransactionForm> {
                     onSubmitted: (_) => _submitForm(),
                     keyboardType: TextInputType.numberWithOptions(decimal: true),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   AdaptativeDatePicker(
                     selectedDate: _selectedDate,
                     onDateChanged: (newDate) {

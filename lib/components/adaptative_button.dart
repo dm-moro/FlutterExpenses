@@ -27,7 +27,7 @@ class AdaptativeButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
           textStyle: MaterialStateProperty.all(
-            TextStyle(color: Colors.white),
+            const TextStyle(color: Colors.white),
           ),
         ),
         child: Text(label),

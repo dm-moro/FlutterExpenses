@@ -11,6 +11,7 @@ class TransactionList extends StatelessWidget {
   final void Function(String) onRemove;
 
   TransactionList(this.transactions, this.onRemove);
+    
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +21,14 @@ class TransactionList extends StatelessWidget {
           builder: (ctx, constraints) {
             return Column(
             children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
               height: 20,
               child: Text('Nenhuma transação cadastrada!',
               style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Container(
               height: constraints.maxHeight * 0.6,
               child: Image.asset('assets/images/waiting.png',
@@ -37,15 +38,25 @@ class TransactionList extends StatelessWidget {
           ],
         );
       })
-      : ListView.builder(
+      : 
+      ListView.builder(
         itemCount: transactions.length,
         itemBuilder: (ctx, index) {
           final tr = transactions[index];
             return TransactionItem(
+              key: GlobalObjectKey(tr),
               tr: tr, 
               onRemove: onRemove);
           },
         ),
+        // ListView(
+        //   children: transactions.map((tr) {
+        //     return TransactionItem(
+        //       key: ValueKey(tr.id),
+        //       tr: tr,
+        //       onRemove: onRemove);
+        //   }).toList(),
+        // ),
       );
     }
   }
